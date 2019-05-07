@@ -1,5 +1,4 @@
-import React  from "react";
-import styled from 'styled-components';
+import React, {useState}  from "react";
 
 import Track from "./Track"
 import {TracksContainer} from "../../assets/style"
@@ -11,6 +10,8 @@ let TopTracksResults = props.data.items;
 
 // console.log(props)
 
+const [activeOverlay, toggleActiveOverlay] = useState(false);
+
 
   return (
      
@@ -21,7 +22,9 @@ let TopTracksResults = props.data.items;
             TopTracksResults.map(track => (
             <Track 
               key={track.id} 
-              data={track} />
+              data={track} 
+              toggleActiveOverlay={toggleActiveOverlay} 
+              activeOverlay={activeOverlay}/>
           ))
         ) : ( "" )}
         </TracksContainer>

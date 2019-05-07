@@ -4,14 +4,10 @@ import styled from 'styled-components';
 import Button from "../Button";
 import {ItemWrapper} from "../../assets/style"
 
-import PlayFill from "../../assets/images/play_fill"
-import PauseFill from "../../assets/images/pause_fill"
-
 
 const Track = props => {
 
     const [activeOverlay, toggleActiveOverlay] = useState(false);
-    const [isPlaying, setIsPlaying] = useState(false);
     
     const Overlay = styled.div`
         // position: absolute;
@@ -31,6 +27,7 @@ const Track = props => {
         overflow: auto;
         background-color: rgb(0,0,0); 
         background-color: rgba(0,0,0,0.8);
+        cursor:pointer;
 
         &.active {
             display:block;
@@ -49,6 +46,7 @@ const Track = props => {
             display: flex;
             position: relative;
             color:#fff;
+            overflow: hidden;
 
             .column {
                 z-index:10;
@@ -71,6 +69,51 @@ const Track = props => {
 
                 }
             }
+            .close-track {
+                position: absolute;
+                right: 1rem;
+                top: 1rem;
+                transition:.3s ease;
+
+                span.note {
+                    border-radius: 500px;
+                    padding: 10px 20px;
+                    text-decoration: none;
+                    color: #1db954;
+                    background-color: #fdfdfd;
+                    font-weight: bold;
+                    letter-spacing: 1px;
+                    text-transform: uppercase;
+                    line-height: 1;
+                    font-size: 0.9rem;
+                    margin-right: 1rem;
+                    transition: .3s ease;
+                    min-width: initial;
+                    font-family: 'Cera',-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+                    box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12);
+                }
+                span.icon {
+                    border-radius: 500px;
+                    padding: 10px 13px;
+                    text-decoration: none;
+                    color: #fff;
+                    background-color: #1db954;
+                    letter-spacing: 1px;
+                    text-transform: uppercase;
+                    line-height: 1;
+                    font-size: 1rem;
+                    cursor: pointer;
+                    transition: .3s ease;
+
+                    &:hover {
+                        background-color: #179c46;
+                    }
+                }
+
+                &:hover {
+                    color:#1db954;
+                }
+            }
            
         }
 
@@ -83,10 +126,106 @@ const Track = props => {
             margin:0;
             opacity:0.85;
         }
+
+        @media screen and (max-width:1150px) {
+            .inner {
+                max-width: 90%;
+            }
+        }
+        @media screen and (max-width:920px) {
+            .inner {
+                // flex-direction: column;
+
+                h1 {
+                    font-size: 1.4rem;
+                    margin: 0 0 0.5rem;
+                }
+                .button-wrapper {
+                    flex-direction: column;
+                    margin-top:0.75rem;
+
+                    .link {
+                        margin-top: 0.5rem;
+                        min-width: 100px;
+                        text-align: center;
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+        @media screen and (min-width:751px) {
+            .note {
+                display:none;
+            }
+        }
+        @media screen and (max-width:750px) {
+            .inner {
+                flex-direction: column;
+                align-items: center;
+                background-color:transparent;
+                position: initial;
+                border-radius: 5px;
+                overflow: inherit;
+                
+
+                .background-poster {
+                    opacity: 1;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                }
+
+                img {
+                    z-index: -111;
+                }
+
+                .column {
+                    &.left {
+                        img {
+                            max-width: 300px;
+                            box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+                        }
+                    }
+                    &.right {
+                        max-width: none;
+                        text-align: center;
+                        align-items: center;
+                        // background-color: #212327;
+                        min-width: 250px;
+                        padding: 15px 25px;
+                        background-color: transparent;
+                    }
+                }
+                
+            }
+            
+        }
+        @media screen and (max-width:640px) {
+            .inner {
+               
+                h1 {
+                    font-size: 1.2rem;
+                    margin: 0 0 0.3rem;
+                }
+                h2 {
+                    font-size: 1.1rem;
+                }
+                .button-wrapper {
+                    margin-top: 0.25rem;
+                }
+                .background-poster {
+                    opacity: 1;
+                }
+                .right {
+                    border-bottom-right-radius: 5px;
+                    border-bottom-left-radius: 5px;
+                }
+
+               
+            }
+        }
     `;
 
     const Bg = styled.img`
-        background-image: url(https://i2-prod.plymouthherald.co.uk/incoming/article2812835.ece/ALTERNATES/s615/0_Untitled-design.jpg);
         background-image: url(${props => props.img});
         background-size: 100%;
         background-position: 50% 50%;
@@ -116,6 +255,11 @@ const Track = props => {
         }
     `;
 
+    const Tile = styled.div`
+
+    
+    `;
+
     const node = useRef();
 
     useEffect(() => {
@@ -133,53 +277,37 @@ const Track = props => {
           return;
         }
         // outside click 
-        
-      toggleActiveOverlay(false)
+        toggleActiveOverlay(false)
       };
       
 
-    // console.log(props)
-
-    // var player = document.getElementById(`player_${props.data.id}`);
-    // function play() {
-    //     player.src = props.data.preview_url;
-    //     player.play();
-    //     setIsPlaying(true);
-    // } 
-    // function pause() {
-    //     player.pause();
-    //     setIsPlaying(false);
-    // }  
 
     return (
         <ItemWrapper>
 
-        <a onClick={() => {toggleActiveOverlay(true)} }>
+        <Tile className="clickable" onClick={() => {toggleActiveOverlay(true)} }>
             <img alt={`Album art for ${props.data.name} by ${props.data.artists[0].name}`}src={props.data.album.images[0].url} />
-        </a>
+        </Tile>
 
         
             <Overlay className={(activeOverlay) ? ("active") : ""}>
                 <div className="flex">
-                    <div className="inner" ref={node} >
-                        <Bg img={props.data.album.images[0].url}></Bg>
+                    <div className="inner"  >
+                        <Bg className="background-poster" img={props.data.album.images[0].url}></Bg>
                             <div className="column left">
                                 <img alt={`Album art for ${props.data.name} by ${props.data.artists[0].name}`}src={props.data.album.images[0].url} />
                             </div>
-                            <div className="column right">
+                            <div className="column right" >
+                                <div className="close-track clickable" onClick={()=>{toggleActiveOverlay(false)}}>
+                                    <span className="note">Tap anywhere to close</span>
+                                    <span className="icon">X</span></div>
                                 <h1>{props.data.name}</h1>
                                 <h2>{props.data.artists[0].name}</h2>
-                                <ButtonWrapper>
+                                <ButtonWrapper className="button-wrapper" ref={node}>
                                     <Button className="link" href={props.data.uri}>Play track</Button>
-                                    <Button className="link" href={props.data.album.uri}>View album</Button>
+                                    <Button className="link" href={props.data.artists[0].uri}>View artist</Button>
                                 </ButtonWrapper>
-                                {/* <audio src="" id={`player_${props.data.id}`}></audio>  
-                                {(!isPlaying) ? (
-                                    <a id={`play_${props.data.id}`} onClick={()=> {play()}}><PlayFill /></a>
-                                ) : 
-                                (
-                                    <a id={`pause_${props.data.id}`} onClick={()=> {pause()}}><PauseFill /></a>
-                                )} */}
+                                
 
                             </div>
                     </div>

@@ -25,7 +25,7 @@ const Button = props => {
     &:hover {
         background-color:#179c46;
     }
-    ${props.filter ? "&:hover { background-color:#232323;}" : ""};
+    ${props.filter ? "&:hover { background-color:#151515;}" : ""};
 
     &.active {
         background-color: #1db954;

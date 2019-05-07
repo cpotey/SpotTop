@@ -5,18 +5,19 @@ import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 
-import {MainWrapper, TracksContainer, TitleHeader, FilterButtons} from "./assets/style"
+import SimpleSnackbar from "./components/Snackbar"
+import {MainWrapper, TitleHeader, FilterButtons} from "./assets/style"
 
 import hash from "./components/Hash";
 import Header from "./components/Header";
 import Button from "./components/Button";
 import Loading from "./components/Loading";
+import Footer from "./components/Footer"
 
 import TopTracks from "./components/Tracks/TopTracks";
 import TopArtists from "./components/Artists/TopArtists";
 
 
-// import {getTopArtists,getTopTracks,getUserDetails} from "./components/API_Functions"
 
 export const authEndpoint = 'https://accounts.spotify.com/authorize';
 const clientId = "0340a65a438d4610851df462daa7f480";
@@ -52,18 +53,9 @@ function App() {
     // if token state exists, do functions to get Tracks, Artists and user details
     // (pass the setState function through as an argument to use in API_Functions file)
     if(token) {
-      // getUserDetails(token);
-      // getTopArtists(token);
-      // getTopTracks(token);
       initialLoad(token);
     }
   }, [token])
-
-  //  useEffect(() => {
-  //   if(activePage) {
-  //     initialLoad(token);
-  //   }
-  // }, [activePage])
 
   // Initial Load
   function initialLoad(token) {
@@ -101,19 +93,19 @@ function App() {
     }));
   }
 
-  function getUserDetails(token) {
-      axios.get('https://api.spotify.com/v1/me', {
-        headers: {
-          Authorization: 'Bearer ' + token
-        }
-      })
-      .then(response => {
-        setUser(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
+  // function getUserDetails(token) {
+  //     axios.get('https://api.spotify.com/v1/me', {
+  //       headers: {
+  //         Authorization: 'Bearer ' + token
+  //       }
+  //     })
+  //     .then(response => {
+  //       setUser(response.data);
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // }
 
 function getTopArtists(token,trackFilter) {
 
@@ -163,13 +155,13 @@ function getTopTracks(token,trackFilter) {
   });
 }
 
-  function createPlaylist(token,userID,activeID) {
+  function createPlaylist(token,userID,activeID,topTracksArray) {
   
     // Get all Top Tracks
-    let array = top_tracks.items;
+    // let array = top_tracks.items;
+    let array = topTracksArray;
     // Create an array containing just the URI's of all the tracks
     let topTrackURIArray = array.map(a => a.uri);
-  
   
     if (activeID === 0) {
       var timeRange = 'across all-time'
@@ -200,9 +192,7 @@ function getTopTracks(token,trackFilter) {
     })
     .then(function (response) {
   
-      // After creating the playlist, store the playlist ID
       let playlistID = response.data.id;
-      // Add the Top Tracks into the new playlist, using the topTrackURIArray 
       axios({
         method: 'post',
         url: `https://api.spotify.com/v1/playlists/${playlistID}/tracks`,
@@ -226,9 +216,12 @@ function getTopTracks(token,trackFilter) {
   
 
 
-
 const ContentArea = styled.div`
   margin-bottom:3rem;
+
+  @media screen and (max-width:1150px) {
+    width: 100%;
+  }
 `;
 
 const Login = styled.div`
@@ -239,6 +232,22 @@ const Login = styled.div`
 
   span {
     color:#1db954;
+  }
+
+  @media screen and (max-width:1150px) {
+    max-width: 90%;
+  }
+  @media screen and (max-width:640px) {
+
+    h3 {
+      font-size: 2.5rem;
+    }
+    
+  }
+  @media screen and (max-width:349px) {
+    h3 {
+      font-size: 2rem;
+    } 
   }
 `;
 
@@ -251,6 +260,14 @@ bottom: 1.5rem;
 right: 2.5rem;
 align-items: flex-end;
 
+@media screen and (max-width:450px) {
+  bottom: 1rem;
+  right: 0;
+  left: 0;
+  text-align: center;
+    align-items: center;
+}
+
 .added {
   border-radius: 500px;
   padding: 1rem 2rem 0.9rem;
@@ -262,9 +279,21 @@ align-items: flex-end;
   text-transform: uppercase;
   line-height: 1;
   font-size: 1rem;
-  transition: .3s ease;
+  // transition: .3s ease;
+  min-width: initial;
+  font-family: 'Cera',-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12);
+
+  div {
+    padding:0;
+  }
 }
 `;
+
+
+
+
+
 
   return (
 
@@ -298,7 +327,7 @@ align-items: flex-end;
                 {buttons.map((button, index) => (
                     <Button filter 
                         key={index} 
-                        className={index === activeID? "active": ""}
+                        className={index === activeID? "active filter-button": "filter-button"}
                         onClick={()=>{
                             setActiveID(index);
                             getTopTracks(token,button.filter);
@@ -331,7 +360,7 @@ align-items: flex-end;
                 {buttons.map((button, index) => (
                     <Button filter 
                         key={index} 
-                        className={index === activeID? "active": ""}
+                        className={index === activeID? "active filter-button": "filter-button"}
                         onClick={()=>{
                             setActiveID(index);
                             getTopArtists(token,button.filter);
@@ -357,18 +386,34 @@ align-items: flex-end;
           )
         }
         {(user) && (top_tracks) && (activePage === "tracks") ? (
+          <div>
           <Fixed>
-            <div className="added">Playlist added!</div>
-            <Button playlist onClick={() => {createPlaylist(token,user.id,activeID)}}>
-              Add playlist to Spotify
-            </Button>
+          
+            <SimpleSnackbar 
+            createPlaylist={createPlaylist}
+            token={token}
+            userID={user.id}
+            activeID={activeID}
+            topTracksArray={top_tracks.items}
+            
+             />
+            
           </Fixed>
+
+
+          
+
+          </div>
+
         ) : ''}
 
         </ContentArea>
 
       </MainWrapper>
+
+      <Footer token={token} />
     </div>
+
     
   </BrowserRouter> 
   );
