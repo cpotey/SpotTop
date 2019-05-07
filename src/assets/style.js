@@ -13,6 +13,13 @@ export const MainWrapper = styled.div`
         padding: 0 3%;
         width: 94%;
       overflow: hidden;
+      
+      }
+
+      @media screen and (max-width:750px) {
+        min-height:80vh;
+
+
       }
 `;
 
@@ -22,6 +29,7 @@ export const TracksContainer = styled.ul`
   display: flex;
   flex-wrap: wrap;
   padding: 0;
+  
 `;
 export const Container = styled.div`
     max-width:1150px;

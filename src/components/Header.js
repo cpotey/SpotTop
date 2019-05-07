@@ -74,6 +74,7 @@ const Header = (props) => {
 
     <Wrapper>
       <Container>
+        
         <h1><span>Spot</span>Top</h1>
         
           {(props.token) ? (

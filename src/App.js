@@ -237,11 +237,26 @@ const Login = styled.div`
   @media screen and (max-width:1150px) {
     max-width: 90%;
   }
+
+  h3 {
+    margin-top:0;
+  }
   @media screen and (max-width:640px) {
 
     h3 {
       font-size: 2.5rem;
+      
     }
+
+    
+  }
+  @media screen and (max-width:400px) {
+    text-align: center;
+    h3 {
+      font-size: 2.1rem;
+      
+    }
+
     
   }
   @media screen and (max-width:349px) {
