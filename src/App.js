@@ -21,7 +21,7 @@ import TopArtists from "./components/Artists/TopArtists";
 
 export const authEndpoint = 'https://accounts.spotify.com/authorize';
 const clientId = "0340a65a438d4610851df462daa7f480";
-const redirectUri = "http://localhost:3000";
+const redirectUri = "https://spottop.netlify.com";
 const scopes = [
   "user-top-read",
   "playlist-modify-public"
