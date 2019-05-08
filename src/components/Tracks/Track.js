@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from "react";
 import styled from 'styled-components';
 
+import Close from "../../assets/images/close"
 import Button from "../Button";
 import {ItemWrapper} from "../../assets/style"
 
@@ -74,6 +75,7 @@ const Track = props => {
                 right: 1rem;
                 top: 1rem;
                 transition:.3s ease;
+                display: flex;
 
                 span.note {
                     border-radius: 500px;
@@ -94,7 +96,8 @@ const Track = props => {
                 }
                 span.icon {
                     border-radius: 500px;
-                    padding: 10px 13px;
+                    padding: 5px;
+                    display: flex;
                     text-decoration: none;
                     color: #fff;
                     background-color: #1db954;
@@ -300,7 +303,7 @@ const Track = props => {
                             <div className="column right" >
                                 <div className="close-track clickable" onClick={()=>{toggleActiveOverlay(false)}}>
                                     <span className="note">Tap anywhere to close</span>
-                                    <span className="icon">X</span></div>
+                                    <span className="icon"><Close /></span></div>
                                 <h1>{props.data.name}</h1>
                                 <h2>{props.data.artists[0].name}</h2>
                                 <ButtonWrapper className="button-wrapper" ref={node}>

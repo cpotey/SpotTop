@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 
 import {Container} from "../assets/style"
-
-
+import Note from "../assets/images/note"
+import Playlist from "../assets/images/playlist"
 
 const Header = (props) => {
 
@@ -23,6 +23,19 @@ const Header = (props) => {
           span {
             color:#1db954;
           }
+      }
+
+      svg {
+        // background-color: #fff;
+        background-color: #1db954;
+        border-radius: 100%;
+        margin-right: 0.5rem;
+        width: 24px;
+        height: 24px;
+
+        path {
+          // fill: #fff;
+        }
       }
 
       ul {
@@ -75,7 +88,7 @@ const Header = (props) => {
     <Wrapper>
       <Container>
         
-        <h1><span>Spot</span>Top</h1>
+      <Note /><h1><span>Spot</span>Top</h1> 
         
           {(props.token) ? (
             <ul>
