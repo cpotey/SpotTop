@@ -33,25 +33,11 @@ const Button = props => {
 
     
   `;
-
-    // console.log(props)
-// ${props.playlist ? "position: fixed;bottom: 1.5rem;right: 2.5rem;" : ""}
-    // if (props.onClick) {
-    //     return  <Button href={props.href} className={props.ClassName} onClick={props.onClick}>
-    //                 {props.children}
-    //             </Button>
-    // } else {
+  
         return  <Button href={props.href} className={props.className} onClick={props.onClick}>
                     {props.children}
                 </Button>;
-    // }
-
-    // return (
-    //     <Button href={props.href} {props => props.onClick ?  : "white"}>
-    //         {props.children}
-    //     </Button>
-    // );
-
+   
 }
 
 

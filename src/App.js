@@ -18,7 +18,7 @@ import TopTracks from "./components/Tracks/TopTracks";
 import TopArtists from "./components/Artists/TopArtists";
 
 
-
+// API Call settings and ID's
 export const authEndpoint = 'https://accounts.spotify.com/authorize';
 const clientId = "0340a65a438d4610851df462daa7f480";
 const redirectUri = "https://spottop.netlify.com";
@@ -94,20 +94,7 @@ function App() {
     }));
   }
 
-  // function getUserDetails(token) {
-  //     axios.get('https://api.spotify.com/v1/me', {
-  //       headers: {
-  //         Authorization: 'Bearer ' + token
-  //       }
-  //     })
-  //     .then(response => {
-  //       setUser(response.data);
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-  // }
-
+  // Get Top Artists
 function getTopArtists(token,trackFilter) {
 
   setLoading('true');
@@ -132,6 +119,7 @@ function getTopArtists(token,trackFilter) {
   });
 }
 
+// Get Top Tracks
 function getTopTracks(token,trackFilter) {
 
   setLoading('true');
@@ -159,7 +147,6 @@ function getTopTracks(token,trackFilter) {
   function createPlaylist(token,userID,activeID,topTracksArray) {
   
     // Get all Top Tracks
-    // let array = top_tracks.items;
     let array = topTracksArray;
     // Create an array containing just the URI's of all the tracks
     let topTrackURIArray = array.map(a => a.uri);
@@ -216,7 +203,7 @@ function getTopTracks(token,trackFilter) {
   }
   
 
-
+// Styled Components
 const ContentArea = styled.div`
   margin-bottom:3rem;
 
@@ -305,10 +292,6 @@ align-items: flex-end;
   }
 }
 `;
-
-
-
-
 
 
   return (
@@ -415,10 +398,6 @@ align-items: flex-end;
              />
             
           </Fixed>
-
-
-          
-
           </div>
 
         ) : ''}

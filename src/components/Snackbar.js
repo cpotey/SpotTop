@@ -4,9 +4,6 @@ import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import Slide from '@material-ui/core/Slide';
 
-
-
-
 const styles = {
     addPlaylist: {
         fontFamily: 'Cera',
@@ -33,19 +30,12 @@ const styles = {
         bottom: '0',
         zIndex:'1'
     }
-
-    
 };
   
-
-
-
 class SimpleSnackbar extends React.Component {
   state = {
     open: false,
   };
-
-  
 
   handleClick = () => {
     this.setState({ open: true });
@@ -59,9 +49,7 @@ class SimpleSnackbar extends React.Component {
     }
 
     this.setState({ open: false });
-  };
-
-  
+  }; 
 
   render() {
     const { classes } = this.props;

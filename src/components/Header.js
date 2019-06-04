@@ -1,7 +1,6 @@
 import React,{useState} from "react";
 import styled from 'styled-components';
 
-
 import {Container} from "../assets/style"
 import Note from "../assets/images/note"
 import Playlist from "../assets/images/playlist"

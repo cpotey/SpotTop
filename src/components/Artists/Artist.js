@@ -136,7 +136,7 @@ const Artist = props => {
 
 
 
-// Turn nubmer into CSV
+// Turn number into CSV
 function formatNumber(num) {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
