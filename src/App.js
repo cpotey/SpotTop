@@ -21,7 +21,8 @@ import TopArtists from "./components/Artists/TopArtists";
 // API Call settings and ID's
 export const authEndpoint = 'https://accounts.spotify.com/authorize';
 const clientId = "0340a65a438d4610851df462daa7f480";
-const redirectUri = "https://spottop.netlify.com";
+// const redirectUri = "https://spottop.netlify.com";
+const redirectUri = "https://spottop.co.uk";
 // const redirectUri = "http://localhost:3000";
 const scopes = [
   "user-top-read",
